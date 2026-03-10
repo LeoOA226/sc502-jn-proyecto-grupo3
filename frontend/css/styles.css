@@ -1,0 +1,210 @@
+/* ===============================
+VARIABLES
+=============================== */
+
+:root{
+    --sg-green:#3DB563;
+    --sg-dark:#1f2937;
+    --sg-bg:#f6f7f9;
+    --sg-radius:16px;
+}
+
+
+
+/* ===============================
+GENERAL
+=============================== */
+
+body{
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background-color: var(--sg-bg);
+}
+
+.container{
+    max-width:1200px;
+}
+
+
+
+/* ===============================
+NAVBAR
+=============================== */
+
+.navbar-sg{
+    background-color: var(--sg-green);
+}
+
+.navbar-sg .navbar-brand{
+    font-weight:700;
+    color:white;
+}
+
+.nav-pill{
+    height:40px;
+    border-radius:999px;
+    padding:0 14px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-weight:600;
+    border:0;
+}
+
+.nav-pill-cart{
+    background:rgba(255,255,255,0.2);
+    color:white;
+}
+
+.nav-pill-login{
+    background:white;
+    color:var(--sg-green);
+}
+
+.nav-pill-admin{
+    background:#ffc107;
+    color:#1b1b1b;
+}
+
+.nav-avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+
+
+/* ===============================
+CARDS
+=============================== */
+
+.card-sg{
+    border-radius:var(--sg-radius);
+    border:none;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+
+
+
+/* ===============================
+PRODUCTOS
+=============================== */
+
+.product-card{
+    border-radius:var(--sg-radius);
+    transition:all .2s ease;
+}
+
+.product-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+.product-img{
+    height:180px;
+    object-fit:cover;
+}
+
+.price{
+    font-weight:700;
+    font-size:1.3rem;
+    color:var(--sg-dark);
+}
+
+.qty{
+    max-width:90px;
+}
+
+
+
+/* ===============================
+BOTONES
+=============================== */
+
+.btn-main{
+    background-color:var(--sg-green);
+    border:none;
+    height:44px;
+    border-radius:12px;
+    font-weight:700;
+}
+
+.btn-main:hover{
+    background-color:#2da653;
+}
+
+.btn-auth{
+    height:46px;
+    border-radius:12px;
+    font-weight:600;
+    background-color:var(--sg-green);
+}
+
+
+
+/* ===============================
+FORMULARIOS
+=============================== */
+
+.auth-card{
+    max-width:420px;
+    margin:auto;
+    border-radius:var(--sg-radius);
+}
+
+.form-control{
+    border-radius:10px;
+}
+
+.form-label{
+    font-weight:600;
+}
+
+
+
+/* ===============================
+CARRITO
+=============================== */
+
+.cart-table{
+    background:white;
+    border-radius:var(--sg-radius);
+    overflow:hidden;
+}
+
+.cart-total{
+    font-size:1.3rem;
+    font-weight:700;
+}
+
+
+
+/* ===============================
+FOOTER
+=============================== */
+
+.footer{
+    margin-top:40px;
+    padding:20px;
+    text-align:center;
+    font-size:0.9rem;
+    color:#6b7280;
+}
+
+
+
+/* ===============================
+RESPONSIVE
+=============================== */
+
+@media(max-width:768px){
+
+.product-img{
+    height:140px;
+}
+
+.nav-pill{
+    padding:0 10px;
+}
+
+}

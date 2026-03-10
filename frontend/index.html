@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta charset="utf-8">
+        <title>Catálogo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/styles.css">
+
+    </head>
+
+    <body class="bg-light">
+
+        <!-- NAV BAR -->
+        <nav class="navbar navbar-expand-lg navbar-light navbar-sg sticky-top">
+            <div class="container-fluid">
+
+                <!-- Marca SuperGO -->
+                <a class="navbar-brand d-flex align-items-center me-3" href="/productos">
+                    <img src="/images/logo.png" alt="SuperGO"
+                         style="height:70px; width:auto; margin-right:8px;">
+                </a>
+
+                <button class="navbar-toggler border-0 bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navSG">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navSG">
+
+                    <form th:action="@{/productos}" method="get" class="d-flex flex-grow-1 justify-content-center my-2 my-lg-0">
+                        <div class="input-group nav-search">
+                            <input class="form-control" type="text" name="q" th:value="${q}" placeholder="Buscar productos...">
+                            <button class="btn btn-light" type="submit">Buscar</button>
+                        </div>
+                    </form>
+
+                    <div class="d-flex align-items-center ms-lg-3 mt-2 mt-lg-0">
+
+                        <a class="nav-pill nav-pill-cart text-decoration-none me-2" th:href="@{/carrito}">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M6 6h15l-1.6 8.2a2 2 0 0 1-2 1.6H8.2a2 2 0 0 1-2-1.6L4.6 2.8H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" fill="currentColor"/>
+                                <path d="M18 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" fill="currentColor"/>
+                            </svg>
+                            Ver carrito
+                        </a>
+
+                        <!-- PERFIL USUARIO -->
+                        <a th:href="@{/perfil}"
+                           sec:authorize="isAuthenticated()"
+                           class="me-2 d-flex align-items-center">
+
+                            <!-- FOTO -->
+                            <img th:if="${session.fotoPerfil != null}"
+                                 th:src="@{${session.fotoPerfil}}"
+                                 class="nav-avatar"
+                                 alt="Perfil">
+
+                            <!-- INICIAL -->
+                            <div th:if="${session.fotoPerfil == null}"
+                                 class="nav-avatar-initial"
+                                 th:text="${#authentication.name.substring(0,1).toUpperCase()}">
+                            </div>
+                        </a>
+
+                        <a class="nav-pill nav-pill-login text-decoration-none me-2" th:href="@{/auth/login}"
+                           sec:authorize="!isAuthenticated()">
+                            Iniciar sesión
+                        </a>
+
+                        <form th:action="@{/auth/logout}" method="post" class="mb-0 me-2" sec:authorize="isAuthenticated()">
+                            <button type="submit" class="nav-pill nav-pill-cart">
+                                Salir
+                            </button>
+                        </form>
+
+                        <!-- ADMINISTRAR PRODUCTOS - SOLO ADMIN (derecha y mismo estilo tipo pill) -->
+                        <a class="nav-pill nav-pill-admin text-decoration-none"
+                           sec:authorize="hasRole('ADMIN')"
+                           th:href="@{/productos/admin}">
+                            Administrar productos
+                        </a>
+
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+
+        <main class="container my-4">
+
+            <!-- BUSCADOR + FILTROS -->
+            <div class="mb-3">
+                <div th:if="${tipos != null}" class="chip-row d-flex gap-2">
+                    <a class="btn btn-light border fw-semibold active" th:href="@{/productos}">Todas</a>
+
+                    <a class="btn btn-light border fw-semibold"
+                       th:each="t : ${tipos}"
+                       th:href="@{|/productos?tipoNombre=${t.nombre}|}"
+                       th:text="${t.nombre}">
+                    </a>
+                </div>
+            </div>
+
+            <h1 class="h3 mb-3" style="font-weight:600;">Catálogo</h1>
+
+            <!-- TODAS LAS CATEGORÍAS -->
+            <section class="hero-banner mb-4"
+                     th:if="${param.tipoNombre == null}">
+                <img src="/images/categorias/todos.jpg" alt="Catálogo completo">
+                <div class="hero-overlay">
+                    <div class="hero-content">
+                        <div class="hero-kicker">Catálogo completo</div>
+                        <div class="hero-title">
+                            Descubre la <span class="accent">Frescura</span> en tu Puerta
+                        </div>
+                        <div class="hero-subtitle">
+                            Explora nuestra selección de productos frescos, abarrotes y esenciales del hogar. Calidad garantizada en cada entrega.
+                        </div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Comprar ahora</a>
+                            <a class="btn btn-light px-4" style="border-radius:999px;font-weight:600;" th:href="@{/productos?tipoNombre=Rebajas}">Ver ofertas</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BANNER POR CATEGORÍA -->
+
+            <!-- ABARROTES -->
+            <section class="hero-banner mb-4"
+                     th:if="${param.tipoNombre != null and param.tipoNombre[0] == 'Abarrotes'}">
+                <img src="/images/categorias/abarrotes.jpg" alt="Abarrotes">
+                <div class="hero-overlay">
+                    <div class="hero-content">
+                        <div class="hero-kicker">Abarrotes</div>
+                        <div class="hero-title">Todo lo esencial para tu despensa</div>
+                        <div class="hero-subtitle">Productos básicos y de confianza para tu día a día.</div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BEBIDAS -->
+            <section class="hero-banner mb-4"
+                     th:if="${param.tipoNombre != null and param.tipoNombre[0] == 'Jugos y Bebidas'}">
+                <img src="/images/categorias/bebidas.png" alt="Bebidas">
+                <div class="hero-overlay">
+                    <div class="hero-content">
+                        <div class="hero-kicker">Jugos y Bebidas</div>
+                        <div class="hero-title">Refresca tu día</div>
+                        <div class="hero-subtitle">Jugos, refrescos y bebidas para toda ocasión.</div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MASCOTAS -->
+            <section class="hero-banner mb-4"
+                     th:if="${param.tipoNombre != null and param.tipoNombre[0] == 'Mascotas'}">
+                <img src="/images/categorias/mascotas.png" alt="Mascotas">
+                <div class="hero-overlay">
+                    <div class="hero-content">
+                        <div class="hero-kicker">Mascotas</div>
+                        <div class="hero-title">Bienestar para tu mejor amigo</div>
+                        <div class="hero-subtitle">Alimentos y cuidados para su salud y felicidad.</div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bebidas Alcoholicas -->
+            <section class="hero-banner mb-4"
+                     th:if="${param.tipoNombre != null and param.tipoNombre[0] == 'Bebidas Alcohólicas'}">
+                <img src="/images/categorias/alcohol.png" alt="Bebidas Alcohólicas">
+                <div class="hero-overlay">
+                    <div class="hero-content">
+                        <div class="hero-kicker">Bebidas Alcohólicas</div>
+                        <div class="hero-title">Para ocasiones especiales</div>
+                        <div class="hero-subtitle">Selección variada para compartir y celebrar.</div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Carnes -->
+            <section class="hero-banner mb-4"
+                     th:if="${param.tipoNombre != null and param.tipoNombre[0] == 'Carnes'}">
+                <img src="/images/categorias/carnes.png" alt="Carnes">
+                <div class="hero-overlay">
+                    <div class="hero-content">
+                        <div class="hero-kicker">Carnes</div>
+                        <div class="hero-title">Frescura y calidad</div>
+                        <div class="hero-subtitle">Carnes y mariscos seleccionados para tus mejores recetas.</div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LIMPIEZA -->
+            <section class="hero-banner mb-4"
+                     th:if="${param.tipoNombre != null and param.tipoNombre[0] == 'Limpieza'}">
+                <img src="/images/categorias/limpieza.webp" alt="Limpieza">
+                <div class="hero-overlay">
+                    <div class="hero-content">
+                        <div class="hero-kicker">Limpieza</div>
+                        <div class="hero-title">Un hogar impecable</div>
+                        <div class="hero-subtitle">Todo para mantener tu casa limpia y ordenada.</div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CUIDADO PERSONAL -->
+            <section class="hero-banner mb-4"
+                     th:if="${param.tipoNombre != null and param.tipoNombre[0] == 'Higiene y belleza'}">
+                <img src="/images/categorias/cuidado_personal.png" alt="Higiene y belleza">
+                <div class="hero-overlay">
+                    <div class="hero-content">
+                        <div class="hero-kicker">Higiene y belleza</div>
+                        <div class="hero-title">Cuidado diario</div>
+                        <div class="hero-subtitle">Productos para tu higiene y bienestar personal.</div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lácteos y Huevos -->
+            <section class="hero-banner mb-4"
+                     th:if="${param.tipoNombre != null and param.tipoNombre[0] == 'Lácteos y Huevos'}">
+                <img src="/images/categorias/lacteos.png" alt="Lácteos y Huevos">
+                <div class="hero-overlay">
+                    <div class="hero-content">
+                        <div class="hero-kicker">Lácteos y Huevos</div>
+                        <div class="hero-title">Para tu mesa cada día</div>
+                        <div class="hero-subtitle">Lácteos y huevos frescos para toda la familia.</div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ELECTRÓNICOS Y HERRAMIENTAS -->
+            <section class="hero-banner mb-4"
+                     th:if="${param.tipoNombre != null and param.tipoNombre[0] == 'Electrónicos y Herramientas'}">
+                <img src="/images/categorias/electronicos.png" alt="Electrónicos y Herramientas">
+                <div class="hero-overlay">
+                    <div class="hero-content">
+                        <div class="hero-kicker">Electrónicos y Herramientas</div>
+                        <div class="hero-title">Tecnología y utilidad</div>
+                        <div class="hero-subtitle">Herramientas y productos para facilitar tu día a día.</div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Rebajas -->
+            <section class="hero-banner mb-4"
+                     th:if="${param.tipoNombre != null and param.tipoNombre[0] == 'Rebajas'}">
+                <img src="/images/categorias/rebajas.png" alt="Rebajas">
+                <div class="hero-overlay">
+                    <div class="hero-content">
+                        <div class="hero-kicker">Rebajas</div>
+                        <div class="hero-title">Ofertas imperdibles</div>
+                        <div class="hero-subtitle">Aprovecha descuentos en productos seleccionados.</div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver ofertas</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MENSAJES -->
+            <div th:if="${ok}" class="alert alert-success" th:text="${ok}"></div>
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+            <!-- NO HAY PRODUCTOS -->
+            <div th:if="${productos == null or #lists.isEmpty(productos)}" class="alert alert-info">
+                No hay productos que mostrar.
+            </div>
+
+            <!-- GRID -->
+            <div id="gridProductos" class="row g-4" th:if="${productos != null and !#lists.isEmpty(productos)}">
+                <div class="col-12 col-md-6 col-xl-4" th:each="p : ${productos}">
+                    <div class="card product-card h-100 border-0 shadow-sm overflow-hidden">
+                        <div class="product-media">
+                            <div class="ratio ratio-1x1">
+                                <img th:if="${p.rutaImagen}" th:src="${p.rutaImagen}"
+                                     alt="imagen">
+                            </div>
+                        </div>
+
+                        <div class="card-body p-4 d-flex flex-column">
+
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
+                                <div class="flex-grow-1">
+                                    <div class="product-meta"
+                                         th:if="${p.categoria != null and p.categoria.tipo != null}">
+                                        <span th:text="${p.categoria.tipo.nombre}"></span>
+                                    </div>
+
+                                    <div class="product-title h5 mb-0">
+                                        <a th:href="@{|/productos/${p.id}|}" th:text="${p.descripcion}"></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-3">
+                                <div class="text-muted small mb-1">Precio</div>
+                                <div class="price">
+                                    ₡ <span th:text="${#numbers.formatDecimal(p.precio, 0, 'POINT', 0, 'POINT')}"></span>
+                                </div>
+                            </div>
+
+                            <form th:action="@{/carrito/agregar}" method="post" class="mt-auto pt-3 d-flex gap-2 align-items-end">
+                                <input type="hidden" name="productoId" th:value="${p.id}">
+                                <input class="form-control qty" type="number"
+                                       name="cantidad" min="1" value="1">
+                                <button class="btn btn-success btn-add flex-grow-1">Agregar</button>
+                            </form>
+
+                            <!-- EDITAR / ELIMINAR — SOLO ADMIN -->
+                            <div sec:authorize="hasRole('ADMIN')" class="mt-3 border-top pt-3">
+                                <a class="btn btn-sm btn-outline-primary me-2"
+                                   th:href="@{|/productos/editar/${p.id}|}">
+                                    Editar
+                                </a>
+
+                                <a class="btn btn-sm btn-outline-danger"
+                                   th:href="@{|/productos/eliminar/${p.id}|}"
+                                   onclick="return confirm('Eliminar producto?');">
+                                    Eliminar
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NUEVO PRODUCTO — SOLO ADMIN 
+            <div sec:authorize="hasRole('ADMIN')" class="mt-5">
+                <a class="btn btn-primary" th:href="@{/productos/nuevo}">
+                    + Nuevo producto
+                </a>
+            </div>
+            -->
+        </main>
+
+        <footer class="footer-sg border-top py-3 mt-4">
+            <div class="container text-center small text-muted">
+                SuperGO 2026. Todos los Derechos Reservados
+            </div>
+        </footer>
+
+        <script src="js/script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
