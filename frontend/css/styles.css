@@ -7,21 +7,59 @@ VARIABLES
     --sg-dark:#1f2937;
     --sg-bg:#f6f7f9;
     --sg-radius:16px;
+    --sg-green-dark: #2da653;
+    --sg-green-soft: #eaf8ef;
+    --sg-text: #374151;
+    --sg-muted: #6b7280;
+    --sg-white: #ffffff;
+    --sg-border: #e5e7eb;
+    --sg-warning: #ffc107;
+    --sg-danger: #dc3545;
+    --sg-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    --sg-shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.12);
+    --sg-radius-sm: 10px;
+    --sg-radius-pill: 999px;
+    --sg-transition: all 0.2s ease;
 }
-
-
 
 /* ===============================
 GENERAL
 =============================== */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
 
 body{
     font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     background-color: var(--sg-bg);
+    color: var(--sg-text);
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    text-decoration: none;
 }
 
 .container{
     max-width:1200px;
+}
+
+.page-title {
+    color: var(--sg-dark);
+    font-weight: 700;
+}
+
+.text-muted {
+    color: var(--sg-muted) !important;
 }
 
 
