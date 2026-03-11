@@ -54,7 +54,7 @@
                         <!-- PERFIL USUARIO -->
                         <a th:href="@{/perfil}"
                            sec:authorize="isAuthenticated()"
-                           class="me-2 d-flex align-items-center">
+                           class="me-2 d-flex align-items-center text-decoration-none">
 
                             <!-- FOTO -->
                             <img th:if="${session.fotoPerfil != null}"
@@ -124,7 +124,7 @@
                             Explora nuestra selección de productos frescos, abarrotes y esenciales del hogar. Calidad garantizada en cada entrega.
                         </div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Comprar ahora</a>
+                            <a class="btn btn-main px-4" href="#gridProductos">Comprar ahora</a>
                             <a class="btn btn-light px-4" style="border-radius:999px;font-weight:600;" th:href="@{/productos?tipoNombre=Rebajas}">Ver ofertas</a>
                         </div>
                     </div>
@@ -143,7 +143,7 @@
                         <div class="hero-title">Todo lo esencial para tu despensa</div>
                         <div class="hero-subtitle">Productos básicos y de confianza para tu día a día.</div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                            <a class="btn btn-main px-4" href="#gridProductos">Ver productos</a>
                         </div>
                     </div>
                 </div>
@@ -159,7 +159,7 @@
                         <div class="hero-title">Refresca tu día</div>
                         <div class="hero-subtitle">Jugos, refrescos y bebidas para toda ocasión.</div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                            <a class="btn btn-main px-4" href="#gridProductos">Ver productos</a>
                         </div>
                     </div>
                 </div>
@@ -175,7 +175,7 @@
                         <div class="hero-title">Bienestar para tu mejor amigo</div>
                         <div class="hero-subtitle">Alimentos y cuidados para su salud y felicidad.</div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                            <a class="btn btn-main px-4" href="#gridProductos">Ver productos</a>
                         </div>
                     </div>
                 </div>
@@ -191,7 +191,7 @@
                         <div class="hero-title">Para ocasiones especiales</div>
                         <div class="hero-subtitle">Selección variada para compartir y celebrar.</div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                            <a class="btn btn-main px-4" href="#gridProductos">Ver productos</a>
                         </div>
                     </div>
                 </div>
@@ -207,7 +207,7 @@
                         <div class="hero-title">Frescura y calidad</div>
                         <div class="hero-subtitle">Carnes y mariscos seleccionados para tus mejores recetas.</div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                            <a class="btn btn-main px-4" href="#gridProductos">Ver productos</a>
                         </div>
                     </div>
                 </div>
@@ -223,7 +223,7 @@
                         <div class="hero-title">Un hogar impecable</div>
                         <div class="hero-subtitle">Todo para mantener tu casa limpia y ordenada.</div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                            <a class="btn btn-main px-4" href="#gridProductos">Ver productos</a>
                         </div>
                     </div>
                 </div>
@@ -239,7 +239,7 @@
                         <div class="hero-title">Cuidado diario</div>
                         <div class="hero-subtitle">Productos para tu higiene y bienestar personal.</div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                            <a class="btn btn-main px-4" href="#gridProductos">Ver productos</a>
                         </div>
                     </div>
                 </div>
@@ -255,7 +255,7 @@
                         <div class="hero-title">Para tu mesa cada día</div>
                         <div class="hero-subtitle">Lácteos y huevos frescos para toda la familia.</div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                            <a class="btn btn-main px-4" href="#gridProductos">Ver productos</a>
                         </div>
                     </div>
                 </div>
@@ -271,7 +271,7 @@
                         <div class="hero-title">Tecnología y utilidad</div>
                         <div class="hero-subtitle">Herramientas y productos para facilitar tu día a día.</div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver productos</a>
+                            <a class="btn btn-main px-4" href="#gridProductos">Ver productos</a>
                         </div>
                     </div>
                 </div>
@@ -287,7 +287,7 @@
                         <div class="hero-title">Ofertas imperdibles</div>
                         <div class="hero-subtitle">Aprovecha descuentos en productos seleccionados.</div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a class="btn btn-success px-4" style="border-radius:999px;font-weight:600;" href="#gridProductos">Ver ofertas</a>
+                            <a class="btn btn-main px-4" href="#gridProductos">Ver ofertas</a>
                         </div>
                     </div>
                 </div>
@@ -305,7 +305,7 @@
             <!-- GRID -->
             <div id="gridProductos" class="row g-4" th:if="${productos != null and !#lists.isEmpty(productos)}">
                 <div class="col-12 col-md-6 col-xl-4" th:each="p : ${productos}">
-                    <div class="card product-card h-100 border-0 shadow-sm overflow-hidden">
+                    <div class="card product-card h-100 overflow-hidden">
                         <div class="product-media">
                             <div class="ratio ratio-1x1">
                                 <img th:if="${p.rutaImagen}" th:src="${p.rutaImagen}"
@@ -339,7 +339,7 @@
                                 <input type="hidden" name="productoId" th:value="${p.id}">
                                 <input class="form-control qty" type="number"
                                        name="cantidad" min="1" value="1">
-                                <button class="btn btn-success btn-add flex-grow-1">Agregar</button>
+                                <button class="btn btn-add flex-grow-1" type="submit">Agregar</button>
                             </form>
 
                             <!-- EDITAR / ELIMINAR — SOLO ADMIN -->
