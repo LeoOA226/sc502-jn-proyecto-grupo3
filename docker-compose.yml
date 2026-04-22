@@ -1,9 +1,8 @@
-version: '3.8'
+version: "3.8"
 
 services:
-
   mysql:
-    image: mysql:8
+    image: mysql:8.0
     container_name: supergo_mysql
     restart: always
     environment:
@@ -15,11 +14,19 @@ services:
       - ./database:/docker-entrypoint-initdb.d
 
   php:
-    image: php:8.2-apache
+    build: .
     container_name: supergo_php
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_NAME: supergo
+      DB_USER: root
+      DB_PASS: root
     ports:
       - "8080:80"
     volumes:
-      - ./app:/var/www/html
-    depends_on:
-      - mysql
+      - ./public:/var/www/html
+      - ./config:/var/www/config
+      - ./includes:/var/www/includes
